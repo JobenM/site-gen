@@ -15,10 +15,11 @@ interface IPageData {
 }
 
 const Articles: NextPage<IPageData> = ({ data }) => {
+  console.log(data)
   return (
     <div>
       <Head>
-        <title>Top 5 Stories today</title>
+        <title>Top 10 Stories today</title>
         <meta name="description" content="Top 5 articles right now" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -29,7 +30,7 @@ const Articles: NextPage<IPageData> = ({ data }) => {
             <h2 >{title}</h2>
             {urlToImage &&
               <div style={{ width: '500px' }}>
-                <Image src={urlToImage} alt={title} width={300} height={200} layout='responsive' objectFit='contain' objectPosition='center' />
+                <Image src={urlToImage} alt={title} width={300} height={200} />
               </div>
             }
             <p>{description}</p>
@@ -52,7 +53,7 @@ export const getServerSideProps = async () => {
     headers,
   };
 
-  const res = await fetch(`https://newsapi.org/v2/top-headlines?country=gb&pageSize=5`, Init)
+  const res = await fetch(`https://newsapi.org/v2/top-headlines?sources=bbc-news,abc-news,google-news-uk,independent,reddit-r-all,vice-news&pageSize=10`, Init)
   const data = await res.json()
 
   return { props: { data } }
