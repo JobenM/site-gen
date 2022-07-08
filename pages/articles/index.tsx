@@ -29,7 +29,7 @@ const Articles: NextPage<IPageData> = ({ data }) => {
             <h2 >{title}</h2>
             {urlToImage &&
               <div style={{ width: '500px' }}>
-                <Image src={urlToImage} alt={title} width={300} height={200} layout='responsive' objectFit='contain' objectPosition='center' />
+                <Image src={`/api/imageproxy?url=${encodeURIComponent(urlToImage)}`} alt={title} width={300} height={200} layout='responsive' objectFit='contain' objectPosition='center' />
               </div>
             }
             <p>{description}</p>
