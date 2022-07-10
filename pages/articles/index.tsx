@@ -19,7 +19,7 @@ const Articles: NextPage<IPageData> = ({ data }) => {
   return (
     <div>
       <Head>
-        <title>Top 10 Stories today</title>
+        <title>Top 5 Stories today</title>
         <meta name="description" content="Top 5 articles right now" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -29,9 +29,7 @@ const Articles: NextPage<IPageData> = ({ data }) => {
           {data.articles.map(({ title, description, url, source, urlToImage }) => <li style={{ borderBottom: '1px solid lightgrey', paddingBottom: '1rem' }} key={title}>
             <h2 >{title}</h2>
             {urlToImage &&
-              <div style={{ width: '500px' }}>
-                <Image src={urlToImage} alt={title} width={300} height={200} />
-              </div>
+              <img src={urlToImage} alt={title} width={300} height={200} />
             }
             <p>{description}</p>
             <a style={{ color: 'darkblue' }} href={url} rel="noreferrer" target="_blank">Visit {source.name} article here</a>
@@ -53,7 +51,7 @@ export const getServerSideProps = async () => {
     headers,
   };
 
-  const res = await fetch(`https://newsapi.org/v2/top-headlines?sources=bbc-news,abc-news,google-news-uk,independent,reddit-r-all,vice-news&pageSize=10`, Init)
+  const res = await fetch(`https://newsapi.org/v2/top-headlines?sources=bbc-news,abc-news,google-news-uk,independent,reddit-r-all,vice-news&pageSize=5`, Init)
   const data = await res.json()
 
   return { props: { data } }
