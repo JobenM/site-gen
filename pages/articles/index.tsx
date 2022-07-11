@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 
 interface IArticle {
   title: string;
@@ -15,7 +14,6 @@ interface IPageData {
 }
 
 const Articles: NextPage<IPageData> = ({ data }) => {
-  console.log(data)
   return (
     <div>
       <Head>
@@ -26,13 +24,17 @@ const Articles: NextPage<IPageData> = ({ data }) => {
       <main>
         <h1>Top 5 Stories today</h1>
         <ul>
-          {data.articles.map(({ title, description, url, source, urlToImage }) => <li style={{ borderBottom: '1px solid lightgrey', paddingBottom: '1rem' }} key={title}>
+          {data.articles.map(({ title, description, url, source, urlToImage }) => <li
+            style={{ borderBottom: '1px solid lightgrey', paddingBottom: '1rem' }}
+            key={title}>
             <h2 >{title}</h2>
             {urlToImage &&
-              <img src={urlToImage} alt={title} width={300} height={200} />
+              <img src={urlToImage} alt={title} height={200} />
             }
             <p>{description}</p>
-            <a style={{ color: 'darkblue' }} href={url} rel="noreferrer" target="_blank">Visit {source.name} article here</a>
+            <a style={{ color: 'darkblue' }} href={url}
+              rel="noreferrer" target="_blank">
+              Visit {source.name} article here</a>
           </li>)}
         </ul>
       </main>
@@ -51,7 +53,11 @@ export const getServerSideProps = async () => {
     headers,
   };
 
-  const res = await fetch(`https://newsapi.org/v2/top-headlines?sources=bbc-news,abc-news,google-news-uk,independent,reddit-r-all,vice-news&pageSize=5`, Init)
+  const newsSources = 'bbc-news,abc-news,google-news-uk,independent,reddit-r-all,vice-news';
+
+  const res = await fetch(
+    `https://newsapi.org/v2/top-headlines?sources=${newsSources}&pageSize=5`,
+    Init)
   const data = await res.json()
 
   return { props: { data } }
